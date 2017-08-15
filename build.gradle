@@ -1,0 +1,68 @@
+buildscript {
+    ext {
+        kotlin_version = '1.1.3-2'
+        tornadofx_version = '1.7.10'
+        spring_boot_version = '1.5.4.RELEASE'
+        sqlite_version = '3.20.0'
+        fxlauncher_version = '1.0.16'
+    }
+    repositories {
+        mavenLocal()
+        mavenCentral()
+        jcenter()
+        maven { url 'https://jitpack.io' }
+    }
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath "org.jetbrains.kotlin:kotlin-allopen:$kotlin_version"
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:$spring_boot_version"
+        classpath "no.tornado:fxlauncher-gradle-plugin:$fxlauncher_version"
+
+    }
+}
+
+apply plugin: "kotlin"
+apply plugin: 'application'
+apply plugin: 'kotlin-spring'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'no.tornado.fxlauncher'
+
+compileKotlin {
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+}
+compileTestKotlin {
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+}
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+    jcenter()
+    maven { url 'https://jitpack.io' }
+}
+
+dependencies {
+    /* KOTLIN DEPENDENCIES */
+    compile "no.tornado:tornadofx:$tornadofx_version"
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jre8:$kotlin_version"
+
+    /* SPRING BOOT DEPENDENCIES */
+    compile "org.springframework.boot:spring-boot-starter:$spring_boot_version"
+    compile "org.springframework.boot:spring-boot-starter-data-jpa:$spring_boot_version"
+    compile "com.h2database:h2"
+
+    /* TEST DEPENDENCIES */
+    testCompile 'junit:junit:4.12'
+}
+
+fxlauncher {
+    applicationVendor 'The Company'
+    applicationUrl 'file:///c:/Users/Brian/workspace/kt/springboot-tornadofx/build/fxlauncher'
+    applicationMainClass 'com.github.bkenn.MyApp'
+    acceptDowngrade false
+    deployTarget 'w48839@bkenn.github.com:springboot-tornadofx'
+}
