@@ -52,19 +52,3 @@ Filename: "{app}\springboot-tornadofx.exe"; Parameters: "-install -svcName ""spr
 
 [UninstallRun]
 Filename: "{app}\springboot-tornadofx.exe "; Parameters: "-uninstall -svcName springboot-tornadofx -stopOnUninstall"; Check: returnFalse()
-
-[Code]
-function returnTrue(): Boolean;
-begin
-  Result := True;
-end;
-
-function returnFalse(): Boolean;
-begin
-  Result := False;
-end;
-
-function InitializeSetup(): Boolean;
-begin
-  Result := True;
-end;

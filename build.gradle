@@ -1,10 +1,10 @@
 buildscript {
     ext {
-        kotlin_version = '1.1.3-2'
+        kotlin_version = '1.1.4'
         tornadofx_version = '1.7.10'
         spring_boot_version = '1.5.4.RELEASE'
         sqlite_version = '3.20.0'
-        fxlauncher_version = '1.0.17'
+        fxlauncher_version = '1.0.16'
     }
     repositories {
         mavenLocal()
@@ -58,12 +58,17 @@ dependencies {
     /* TEST DEPENDENCIES */
     testCompile 'junit:junit:4.12'
 }
-
+appDeployTarget = ""
 fxlauncher {
     applicationVendor 'The Company'
-    applicationUrl 'file:///c:/Users/Brian/workspace/kotlin/springboot-tornadofx/build/fxlauncher'
+    applicationUrl 'file:///c:/Users/Brian/workspace/kt/springboot-tornadofx/build/fxlauncher'
     applicationMainClass 'com.github.bkenn.MyApp'
     acceptDowngrade false
-    deployTarget 'brian@demo.example.com:springboot-tornadofx'
-    javapackagerOptions ['-v']
+    deployTarget 'Brian@192.168.1.171:21'
+    task deployS3(type: Exec) {
+        // You need to have installed AWS command line interface: https://aws.amazon.com/cli/
+        commandLine 'aws', 'configure', 'set', 'aws_access_key_id', 'your_access_key_id'
+        commandLine 'aws', 'configure', 'set', 'aws_secret_access_key', 'your_secret_access_key'
+        commandLine 'aws', 's3', 'cp', 'build/libs', appDeployTarget, '--acl', 'public-read', '--recursive', '--region', 'us-west-1'
+    }
 }
